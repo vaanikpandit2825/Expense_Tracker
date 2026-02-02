@@ -1,22 +1,44 @@
 package com.example.expensetracker
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
-import android.widget.TextView
-
+import android.os.Bundle
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         setContentView(R.layout.activity_main)
+
+
+        val etEmail = findViewById<EditText>(R.id.etEmail)
+        val etPassword = findViewById<EditText>(R.id.etPassword)
+        val btnLogin = findViewById<Button>(R.id.btnLogin)
         val tvRegister = findViewById<TextView>(R.id.tvRegister)
 
+        val dbHelper = DatabaseHelper(this)
+
+        // 3️⃣ LOGIN LOGIC
+        btnLogin.setOnClickListener {
+
+            val email = etEmail.text.toString()
+            val password = etPassword.text.toString()
+
+            val isValidUser = dbHelper.checkUser(email, password)
+
+            if (isValidUser) {
+                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
         tvRegister.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 }
-
