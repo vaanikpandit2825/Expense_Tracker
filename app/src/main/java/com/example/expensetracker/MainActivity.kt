@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         val dbHelper = DatabaseHelper(this)
 
-        // 3️⃣ LOGIN LOGIC
+
         btnLogin.setOnClickListener {
 
             val email = etEmail.text.toString()
@@ -31,6 +31,10 @@ class MainActivity : AppCompatActivity() {
 
             if (isValidUser) {
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
+
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
             } else {
                 Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show()
             }
